@@ -123,5 +123,23 @@ public class PostController {
         return "delete";
     }
 
+    @RequestMapping(value = "/search")
+    public String SearchPost(@RequestParam("search_text") String searchText, Model model, HttpSession sesh)
+    {
+        String results = "";
+        model.addAttribute("title", "Search Page");
+        LoggerPost pl = getLogger(sesh);
+        model.addAttribute("isLoggedIn", pl.GetLoggedIn());
+        if(!searchText.isEmpty())
+        {
+            results = pl.SearchFromDB(searchText);
+            model.addAttribute("search", results);
+            model.addAttribute("newLineChar", '\n');
+        }
+
+
+        return "search";
+    }
+
 }
 

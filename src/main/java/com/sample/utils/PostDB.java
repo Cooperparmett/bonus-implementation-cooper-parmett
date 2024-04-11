@@ -202,5 +202,29 @@ public class PostDB {
             return "Internal error: 500";
         }
     }
+
+    String getSearchedPost(String post)
+    {
+        if (!isLoggedIn)
+            return "Internal error: Not logged in";
+        try {
+            Statement st = con.createStatement();
+            String sql = "SELECT * FROM Posts WHERE text = '"+ post + "';";
+            ResultSet rs = st.executeQuery(sql);
+            String result = "timeStamp" + "\t" + "text\n";
+            // Extract result from ResultSet rs
+            while(rs.next()){
+                result += "" + rs.getString("timeStamp")
+                        + "\t" + rs.getString("text") + "\n";
+            }
+            rs.close();
+            //concatenate to result
+            return result;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Couldn't find/display post.");
+            return "false";
+        }
+    }
 }
 

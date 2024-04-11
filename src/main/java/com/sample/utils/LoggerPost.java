@@ -118,4 +118,6 @@ public class LoggerPost {
     public boolean DeletePostFromDB(String post) {
         return db.deletePost(post);
     }
+
+    public String SearchFromDB(String post) { return db.getSearchedPost(post); }
 }
